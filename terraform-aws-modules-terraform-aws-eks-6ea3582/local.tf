@@ -6,6 +6,7 @@ locals {
   cluster_security_group_id = coalesce(
     join("", aws_security_group.cluster.*.id),
     var.cluster_security_group_id,
+    "aws-eks"
   )
 
   cluster_iam_role_name = coalesce(
@@ -22,6 +23,7 @@ locals {
   worker_security_group_id = coalesce(
     join("", aws_security_group.workers.*.id),
     var.worker_security_group_id,
+    "aws-eks"
   )
   default_iam_role_id = concat(aws_iam_role.workers.*.id, [""])[0]
   kubeconfig_name     = var.kubeconfig_name == "" ? "eks_${var.cluster_name}" : var.kubeconfig_name
